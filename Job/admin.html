@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - JobHunt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { 'sans': ['Plus Jakarta Sans', 'sans-serif'] }, colors: { primary: { 50:'#eff6ff',100:'#dbeafe',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8' } } } }
+        }
+    </script>
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- Admin Navbar -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-9 h-9 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-briefcase text-white text-sm"></i>
+                        </div>
+                        <span class="text-lg font-extrabold text-gray-900">Job<span class="text-primary-500">Hunt</span></span>
+                    </a>
+                    <span class="hidden sm:inline px-3 py-1 bg-primary-100 text-primary-600 rounded-lg text-xs font-bold">Admin Panel</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="px-4 py-2 text-sm font-semibold text-gray-600 hover:text-primary-600 transition-all"><i class="fas fa-external-link-alt mr-1"></i>View Site</a>
+                    <a href="jobs.html" class="px-4 py-2 text-sm font-semibold text-gray-600 hover:text-primary-600 transition-all"><i class="fas fa-list mr-1"></i>All Jobs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Total Jobs</p>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-1" id="stat-total">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-briefcase text-primary-500 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Featured</p>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-1" id="stat-featured">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-star text-amber-500 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Categories</p>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-1" id="stat-categories">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-th-large text-green-500 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Companies</p>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-1" id="stat-companies">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-building text-purple-500 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Job Form -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6" id="form-title">
+                        <i class="fas fa-plus-circle text-primary-500 mr-2"></i>Add New Job
+                    </h2>
+                    <form id="job-form" class="space-y-4">
+                        <input type="hidden" id="edit-id" value="">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Job Title *</label>
+                            <input type="text" id="form-title-input" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm" placeholder="e.g. Senior Developer">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Company *</label>
+                            <input type="text" id="form-company" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm" placeholder="e.g. Google">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Location *</label>
+                            <input type="text" id="form-location" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm" placeholder="e.g. New York, NY">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Category</label>
+                                <select id="form-category" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm">
+                                    <option value="technology">Technology</option>
+                                    <option value="design">Design</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="education">Education</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="engineering">Engineering</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Job Type</label>
+                                <select id="form-type" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm">
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Freelance">Freelance</option>
+                                    <option value="Internship">Internship</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Level</label>
+                                <select id="form-level" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm">
+                                    <option value="Entry">Entry</option>
+                                    <option value="Mid">Mid</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Lead">Lead</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Work Mode</label>
+                                <select id="form-mode" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm">
+                                    <option value="Remote">Remote</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="On-site">On-site</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Min Salary ($)</label>
+                                <input type="number" id="form-salary-min" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm" placeholder="50000">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Max Salary ($)</label>
+                                <input type="number" id="form-salary-max" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm" placeholder="100000">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Description *</label>
+                            <textarea id="form-description" required rows="4" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm resize-none" placeholder="Job description..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Tags (comma separated)</label>
+                            <input type="text" id="form-tags" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm" placeholder="React, Node.js, TypeScript">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Apply URL</label>
+                            <input type="url" id="form-apply-url" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm" placeholder="https://company.com/apply">
+                        </div>
+                        <div>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" id="form-featured" class="w-4 h-4 text-primary-500 rounded border-gray-300 mr-3">
+                                <span class="text-sm font-semibold text-gray-700">⭐ Mark as Featured</span>
+                            </label>
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-all text-sm">
+                                <i class="fas fa-save mr-2"></i><span id="form-submit-text">Add Job</span>
+                            </button>
+                            <button type="button" id="cancel-edit" class="hidden px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all text-sm">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Import Section -->
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h3 class="text-sm font-bold text-gray-700 mb-3"><i class="fas fa-file-import mr-2 text-primary-500"></i>Import Jobs (JSON)</h3>
+                        <input type="file" id="import-file" accept=".json" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-sm file:bg-primary-100 file:text-primary-600 file:font-semibold">
+                        <button id="import-btn" class="w-full mt-3 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all text-sm">
+                            <i class="fas fa-upload mr-2"></i>Import
+                        </button>
+                        <button id="export-btn" class="w-full mt-2 px-4 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all text-sm">
+                            <i class="fas fa-download mr-2"></i>Export All Jobs
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Table -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-gray-900">
+                            <i class="fas fa-list text-primary-500 mr-2"></i>All Job Listings
+                        </h2>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="admin-search" placeholder="Search jobs..." class="px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 text-sm w-48">
+                            <button id="delete-all-btn" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 font-semibold rounded-xl text-sm transition-all">
+                                <i class="fas fa-trash mr-1"></i>Delete All
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full admin-table">
+                            <thead>
+                                <tr class="border-b border-gray-100">
+                                    <th class="px-6 py-4 text-left">Job</th>
+                                    <th class="px-6 py-4 text-left">Category</th>
+                                    <th class="px-6 py-4 text-left">Type</th>
+                                    <th class="px-6 py-4 text-left">Salary</th>
+                                    <th class="px-6 py-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-jobs-table">
+                                <!-- Jobs rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

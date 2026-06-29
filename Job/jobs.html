@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse thousands of job listings. Filter by location, category, salary range, and job type.">
+    <title>Browse Jobs - JobHunt | Find Your Perfect Career</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'sans': ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+                        dark: { 800:'#1a1a2e',900:'#0f0f23' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+
+    <!-- Navbar (same structure) -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-11 h-11 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30">
+                        <i class="fas fa-briefcase text-white text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-extrabold text-gray-900">Job<span class="text-primary-500">Hunt</span></span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="jobs.html" class="px-4 py-2 rounded-xl text-sm font-semibold text-primary-600 bg-primary-50 transition-all">
+                        <i class="fas fa-search mr-2"></i>Find Jobs
+                    </a>
+                    <a href="admin.html" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-all">
+                        <i class="fas fa-lock mr-2"></i>Admin
+                    </a>
+                </div>
+                <a href="jobs.html" class="hidden lg:inline-flex px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all duration-300">Post a Job</a>
+                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100">
+                    <div class="space-y-1.5" id="hamburger">
+                        <span class="block w-6 h-0.5 bg-gray-700"></span>
+                        <span class="block w-6 h-0.5 bg-gray-700"></span>
+                        <span class="block w-4 h-0.5 bg-gray-700"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-xl">
+            <div class="px-4 py-4 space-y-2">
+                <a href="index.html" class="flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50"><i class="fas fa-home mr-3 w-5"></i>Home</a>
+                <a href="jobs.html" class="flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-primary-600 bg-primary-50"><i class="fas fa-search mr-3 w-5"></i>Find Jobs</a>
+                <a href="admin.html" class="flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50"><i class="fas fa-lock mr-3 w-5"></i>Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="pt-28 pb-8 bg-gradient-to-br from-primary-600 to-primary-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl lg:text-4xl font-extrabold text-white mb-6">Find Your Dream Job</h1>
+            <!-- Search Bar -->
+            <div class="bg-white rounded-2xl p-3 shadow-2xl">
+                <form id="search-form" class="flex flex-col md:flex-row gap-3">
+                    <div class="flex-1 relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-keyword" placeholder="Job title, keyword, or company" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-medium">
+                    </div>
+                    <div class="flex-1 relative">
+                        <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-location" placeholder="City, state, or remote" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-medium">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <select id="search-category" class="w-full md:w-48 px-4 py-3.5 rounded-xl bg-gray-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-medium">
+                            <option value="">All Categories</option>
+                            <option value="technology">Technology</option>
+                            <option value="design">Design</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="finance">Finance</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="education">Education</option>
+                            <option value="sales">Sales</option>
+                            <option value="engineering">Engineering</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl shadow-lg hover:from-primary-700 hover:to-primary-800 transition-all text-sm">
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters and Results -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Filters -->
+                <aside class="lg:w-72 flex-shrink-0">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center justify-between">
+                            <span><i class="fas fa-filter mr-2 text-primary-500"></i>Filters</span>
+                            <button id="clear-filters" class="text-xs text-primary-500 hover:text-primary-700 font-semibold">Clear All</button>
+                        </h3>
+
+                        <!-- Job Type -->
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Job Type</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="full-time" class="filter-type w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Full-time</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="part-time" class="filter-type w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Part-time</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="contract" class="filter-type w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Contract</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="freelance" class="filter-type w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Freelance</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="internship" class="filter-type w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Internship</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Experience Level -->
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Experience Level</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="entry" class="filter-level w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Entry Level</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="mid" class="filter-level w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Mid Level</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="senior" class="filter-level w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Senior Level</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="lead" class="filter-level w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Lead / Manager</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Salary Range -->
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Salary Range</h4>
+                            <select id="filter-salary" class="w-full px-3 py-2.5 rounded-xl bg-gray-50 text-gray-800 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                <option value="">Any Salary</option>
+                                <option value="0-50000">$0 - $50K</option>
+                                <option value="50000-100000">$50K - $100K</option>
+                                <option value="100000-150000">$100K - $150K</option>
+                                <option value="150000-200000">$150K - $200K</option>
+                                <option value="200000+">$200K+</option>
+                            </select>
+                        </div>
+
+                        <!-- Work Mode -->
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Work Mode</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="remote" class="filter-mode w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Remote</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="hybrid" class="filter-mode w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">Hybrid</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" value="onsite" class="filter-mode w-4 h-4 text-primary-500 rounded border-gray-300">
+                                    <span class="ml-3 text-sm text-gray-600 group-hover:text-gray-900">On-site</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button id="apply-filters" class="w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-all text-sm">
+                            Apply Filters
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Job Results -->
+                <main class="flex-1">
+                    <!-- Results Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-sm text-gray-500"><span id="results-count" class="font-bold text-gray-900">12</span> jobs found</p>
+                        <select id="sort-by" class="px-4 py-2 rounded-xl bg-white text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium text-gray-700">
+                            <option value="newest">Newest First</option>
+                            <option value="salary-high">Salary: High to Low</option>
+                            <option value="salary-low">Salary: Low to High</option>
+                            <option value="relevance">Most Relevant</option>
+                        </select>
+                    </div>
+
+                    <!-- Job Listings -->
+                    <div id="jobs-list" class="space-y-4">
+                        <!-- Jobs will be rendered by JavaScript -->
+                    </div>
+
+                    <!-- Loading Spinner -->
+                    <div id="loading" class="hidden flex justify-center py-12">
+                        <div class="spinner"></div>
+                    </div>
+
+                    <!-- No Results -->
+                    <div id="no-results" class="hidden text-center py-16">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-search text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">No jobs found</h3>
+                        <p class="text-gray-500 mb-6">Try adjusting your search criteria or filters</p>
+                        <button onclick="document.getElementById('clear-filters').click()" class="px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all">
+                            Clear Filters
+                        </button>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="pagination" class="flex items-center justify-center space-x-2 mt-10">
+                        <!-- Pagination will be rendered by JavaScript -->
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (simplified) -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <a href="index.html" class="inline-flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-briefcase text-white"></i>
+                </div>
+                <span class="text-xl font-extrabold text-white">Job<span class="text-primary-400">Hunt</span></span>
+            </a>
+            <p class="text-sm">© 2024 JobHunt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary-600 text-white rounded-xl shadow-lg translate-y-20 opacity-0 transition-all z-50 flex items-center justify-center hover:bg-primary-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jobs.js"></script>
+</body>
+</html>

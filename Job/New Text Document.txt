@@ -1,0 +1,13 @@
+job-portal/
+├── index.html
+├── jobs.html
+├── job-detail.html
+├── admin.html
+├── css/
+│   └── custom.css
+├── js/
+│   ├── app.js
+│   ├── jobs.js
+│   ├── job-detail.js
+│   └── admin.js
+└── README.md
